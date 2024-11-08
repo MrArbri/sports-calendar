@@ -38,3 +38,12 @@ main {
     grid-template-columns: repeat(7,1fr);
     gap: 0.5rem;
 }
+
+.day {
+    padding: 1rem;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    text-align: center;
+    cursor: pointer;
+}
+
