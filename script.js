@@ -1,5 +1,6 @@
 
 function showCalendar() {
+    // Getting the id of the <main> on index.html
     const content = document.getElementById("content");
     content.innerHTML = ""; // Clearing previous content
 
@@ -9,11 +10,13 @@ function showCalendar() {
 
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
+    // Declaring calendarGrid and creating a <div> tag with a class="calendar-grid" inside
     const calendarGrid = document.createElement("div");
     calendarGrid.classList.add("calendar-grid");
 
     // Generate days in the month 
     for (let day = 1; day <= daysInMonth; day++) {
+        // for each day in "calendar-grid" a <div> with a class="day" will be created
         const dayDiv = document.createElement("div");
         dayDiv.classList.add("day");
         dayDiv.textContent = day;
