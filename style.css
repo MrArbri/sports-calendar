@@ -33,3 +33,8 @@ main {
     margin-top: 2rem;
 }
 
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7,1fr);
+    gap: 0.5rem;
+}
