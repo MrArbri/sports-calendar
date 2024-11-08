@@ -12,3 +12,12 @@ body {
     margin: 0;
     padding: 0;
 }
+
+header {
+    width: 100%;
+    background: #4CAf50;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
