@@ -1,4 +1,23 @@
 
+// Fetch data from sportData.json file 
+fetch('sportData.json')
+
+    .then(response => {
+        if (!response.ok) {
+            throw new Error ('Network response was not ok.');
+        }
+        return response.json(); // Parse JSON data 
+    })
+
+    .then(data => {
+        console.log(data); // Display data in the console to verify 
+    })
+
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
+
+// Creating the showCalendar function 
 function showCalendar() {
     // Getting the id of the <main> on index.html
     const content = document.getElementById("content");
