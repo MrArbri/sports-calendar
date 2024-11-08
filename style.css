@@ -21,3 +21,9 @@ header {
     text-align: center;
 }
 
+nav button {
+    width: 90%;
+    max-width: 800px;
+    margin-top: 2rem;
+}
+
