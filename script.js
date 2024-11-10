@@ -21,6 +21,9 @@ fetch('sportData.json')
 
 // Creating the showCalendar function 
 function showCalendar() {
+    // Hide add event form when showing the calendar
+    document.getElementById("addEventForm").style.display = "none"; 
+
     // Getting the id of the <main> on index.html
     const content = document.getElementById("content");
     content.innerHTML = ""; // Clearing previous content
@@ -93,7 +96,7 @@ function showEventDetails(events) {
         const awayGoals = event.result && event.result.awayGoals !== null ? event.result.awayGoals : "N/A";
         const yellowCards = event.result && event.result.yellowCards.length > 0 ? event.result.yellowCards.join(", ") : "No yellow cards";
         const redCards = event.result && event.result.directRedCards.length > 0 ? event.result.directRedCards.join(", ") : "No red cards";
-        
+
         eventDetail.innerHTML += `
             <div class="event-item">
                 <h2>${homeTeam} vs. ${awayTeam}</h2>
@@ -112,4 +115,43 @@ function showEventDetails(events) {
     
     // Display the event detail section 
     eventDetail.style.display = "block"; 
+}
+
+function showAddEventForm() {
+    // Hide the calendar view and show the add event form
+    document.getElementById("content").innerHTML = ""; // Optionally clear the main content if you want
+    document.getElementById("addEventForm").style.display = "block";
+}
+
+
+function addEvent(event) {
+    // Prevent page refresh on form submission
+    event.preventDefault();
+
+    // Capture values from form fields
+    const eventDate = document.getElementById("eventDate").value;
+    const eventTime = document.getElementById("eventTime").value;
+    const eventSport = document.getElementById("eventSport").value;
+    const eventTeams = document.getElementById("eventTeams").value;
+
+    // Create a new event object
+    const newEvent = {
+        dateVenue: eventDate,          // Use the date input as the event date
+        timeVenueUTC: eventTime,        // Use the time input as the event time
+        sport: eventSport,              // Sport name
+        teams: eventTeams,              // Teams/participants in a simple string format
+    };
+
+    // Step 2: Add new event to the eventsData array
+    eventsData.push(newEvent);
+
+    // Step 3: Refresh the calendar view to display the new event
+    showCalendar();
+
+    // Step 4: Clear the form and hide it
+    document.getElementById("addEventForm").style.display = "none";
+    document.getElementById("eventDate").value = "";
+    document.getElementById("eventTime").value = "";
+    document.getElementById("eventSport").value = "";
+    document.getElementById("eventTeams").value = "";
 }

@@ -9,6 +9,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #f4f4f9;
     margin: 0;
     padding: 0;
 }
@@ -48,14 +49,57 @@ main {
 }
 
 #eventDetail {
-    display: none;
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    width: 80%;
+    max-width: 600px;
     padding: 20px;
-    margin: 2rem;
-    border: 1px solid #ccc;
-    background: #f9f9f9;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 100;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+#eventDetail.fade-in {
+    opacity: 1;
+    /* Ensure it's visible after the transition */
+    display: block; 
+}
+
+#closeEventDetailButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+#closeEventDetailButton:hover {
+    background-color: #d32f2f;
 }
 
 .event-item {
     margin-bottom: 10px;
 }
 
+@media (max-width: 768px) {
+    .calendar-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    #eventDetail, #addEventForm {
+        width: 90%;
+    }
+}
+@media (max-width: 480px) {
+    .calendar-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
