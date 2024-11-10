@@ -47,3 +47,15 @@ main {
     cursor: pointer;
 }
 
+#eventDetail {
+    display: none;
+    padding: 20px;
+    margin: 2rem;
+    border: 1px solid #ccc;
+    background: #f9f9f9;
+}
+
+.event-item {
+    margin-bottom: 10px;
+}
+
