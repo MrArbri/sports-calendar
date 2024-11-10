@@ -1,3 +1,4 @@
+let eventsData = [];
 
 // Fetch data from sportData.json file 
 fetch('sportData.json')
@@ -10,7 +11,8 @@ fetch('sportData.json')
     })
 
     .then(data => {
-        console.log(data); // Display data in the console to verify 
+        eventsData = data.data; // Store data globally 
+        showCalendar(); // Initialize the calendar after data is loaded 
     })
 
     .catch(error => {
@@ -40,10 +42,21 @@ function showCalendar() {
         dayDiv.classList.add("day");
         dayDiv.textContent = day;
 
-        // Placeholder for events 
-        dayDiv.addEventListener("click", () => {
-            alert(`Details for events on ${day}/${month + 1}/${year}`)
+        // Find events for the current day
+        const dayEvents = eventsData.filter(event => {
+            const eventDate = new Date(event.dateVenue);
+            return eventDate.getDate() === day &&
+            eventDate.getMonth() === month &&
+            eventDate.getFullYear() === year;
         });
+
+        // If there are events, add a marker and set up the click handler 
+        if (dayEvents.length > 0) {
+            dayDiv.classList.add("event-day"); // Add a special class if there is an event
+            dayDiv.addEventListener("click", () => {
+            showEventDetails(dayEvents); // Pass events for this day 
+        });
+        }
         
         calendarGrid.appendChild(dayDiv);
     }
@@ -52,4 +65,23 @@ function showCalendar() {
 }
 
 // Load calendar view initially 
-document.addEventListener("DOMContentLoaded", showCalendar);
+document.addEventListener("DOMContentLoaded", () => {
+    if (eventsData.length === 0) {
+        showCalendar();
+    }
+});
+
+// Creating a function that displays detailed information 
+function showEventDetails(events) {
+    const eventDetail = document.getElementById("eventDetail");
+
+    // Clear previous details and display each event 
+    eventDetail.innerHTML = events.map(event => `
+    <h2>${event.homeTeam.name} vs. ${eventData.awayTeam.name}</h2>
+    <p>Date: ${event.dateVenue}</p>
+    <p>Time: ${event.timeVenueUTC}</p>
+    <p>Competition: ${event.originCompetitionName}</p>
+    `).join('') ;
+
+    eventDetail.style.display = "block"; // Show the detail view 
+}
