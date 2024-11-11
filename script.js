@@ -2,19 +2,16 @@ let eventsData = [];
 
 // Fetch data from sportData.json file 
 fetch('sportData.json')
-
     .then(response => {
         if (!response.ok) {
-            throw new Error ('Network response was not ok.');
+            throw new Error('Network response was not ok.');
         }
         return response.json(); // Parse JSON data 
     })
-
     .then(data => {
         eventsData = data.data; // Store data globally 
         showCalendar(); // Initialize the calendar after data is loaded 
     })
-
     .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
     });
@@ -26,12 +23,17 @@ function showCalendar() {
 
     // Getting the id of the <main> on index.html
     const content = document.getElementById("content");
-    content.innerHTML = ""; // Clearing previous content
+    // Clearing previous content
+    content.innerHTML = ""; 
+
+    if (eventsData.length === 0) {
+        content.innerHTML = "<p>No events available</p>";
+        return; // Exit function if no events
+    }
 
     const currentDate = new Date();
     const year = currentDate.getFullYear();
     const month = 0;
-
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
     // Declaring calendarGrid and creating a <div> tag with a class="calendar-grid" inside
@@ -48,9 +50,11 @@ function showCalendar() {
         // Find events for the current day
         const dayEvents = eventsData.filter(event => {
             const eventDate = new Date(event.dateVenue);
-            return eventDate.getDate() === day &&
-            eventDate.getMonth() === month &&
-            eventDate.getFullYear() === year;
+            return (
+                eventDate.getDate() === day &&
+                eventDate.getMonth() === month &&
+                eventDate.getFullYear() === year
+            );
         });
 
         // If there are events, add a marker and set up the click handler 
@@ -60,18 +64,18 @@ function showCalendar() {
             dayDiv.addEventListener("click", () => {
                 // Pass events for this day 
                 showEventDetails(dayEvents); 
-        });
+            });
         }
         
         calendarGrid.appendChild(dayDiv);
     }
 
-    content.appendChild(calendarGrid)
+    content.appendChild(calendarGrid);
 }
 
 // Load calendar view initially 
 document.addEventListener("DOMContentLoaded", () => {
-    if (eventsData.length === 0) {
+    if (eventsData.length > 0) {
         showCalendar();
     }
 });
@@ -85,9 +89,7 @@ function showEventDetails(events) {
 
     // Loop through each event and display its details 
     events.forEach(event => {
-        // Handle missing homeTeam
         const homeTeam = event.homeTeam ? event.homeTeam.name : "N/A"; 
-        // Handle missing awayTeam
         const awayTeam = event.awayTeam ? event.awayTeam.name : "N/A"; 
         const stage = event.stage ? event.stage.name : "N/A";
         const status = event.status ? event.status : "N/A";
@@ -112,17 +114,30 @@ function showEventDetails(events) {
             </div>
         `;
     });
-    
-    // Display the event detail section 
+
+    // Show the event details and prevent clicks from interacting with other parts
     eventDetail.style.display = "block"; 
+    eventDetail.classList.add("fade-in");
+
+    // Add an event listener to close when clicking outside the details
+    eventDetail.addEventListener("click", (e) => {
+        if (e.target === eventDetail) {
+            closeEventDetails();
+        }
+    });
+}
+
+function closeEventDetails() {
+    const eventDetail = document.getElementById("eventDetail");
+    eventDetail.style.display = "none";
+    eventDetail.classList.remove("fade-in");
 }
 
 function showAddEventForm() {
     // Hide the calendar view and show the add event form
-    document.getElementById("content").innerHTML = ""; // Optionally clear the main content if you want
+    document.getElementById("content").innerHTML = ""; 
     document.getElementById("addEventForm").style.display = "block";
 }
-
 
 function addEvent(event) {
     // Prevent page refresh on form submission
