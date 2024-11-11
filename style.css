@@ -133,6 +133,7 @@ main {
     border-radius: 8px;
     margin-top: 2rem;
     display: none;
+    transition: opacity 0.3s ease, visibility 0s 0.3s;
 }
 
 #addEventForm h2 {
@@ -210,4 +211,27 @@ main {
         padding: 0.75rem;
         font-size: 0.8rem;
     }
+}
+
+/* Fade-in effect */
+.fade-in {
+    opacity: 0;
+    display: block;
+    animation: fadeIn 0.4s forwards;
+}
+
+/* Fade-out effect */
+.fade-out {
+    opacity: 1;
+    animation: fadeOut 0.4s forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
 }

@@ -129,9 +129,35 @@ function showEventDetails(events) {
 
 function closeEventDetails() {
     const eventDetail = document.getElementById("eventDetail");
-    eventDetail.style.display = "none";
     eventDetail.classList.remove("fade-in");
+    eventDetail.style.display = "none";
 }
+
+// Transition function for switching views
+function switchView(hideElement, showElement) {
+    // Start by hiding the element that should disappear
+    hideElement.style.opacity = 0;
+
+    // After the fade-out duration, set display: none on the hidden element
+    setTimeout(() => {
+        hideElement.style.display = 'none';
+
+        // Now, make the new element visible and fade it in smoothly
+        showElement.style.display = 'block';
+        setTimeout(() => {
+            showElement.style.opacity = 1;
+        }, 10); // Slight delay to ensure display is set before opacity starts
+    }, 500); // Match the timeout duration to your CSS transition duration (0.5s here)
+}
+
+// Event listeners for switching views
+document.querySelector('#viewCalendarBtn').addEventListener('click', () => {
+    switchView(document.getElementById('addEventForm'), document.getElementById('content'));
+});
+
+document.querySelector('#addEventBtn').addEventListener('click', () => {
+    switchView(document.getElementById('content'), document.getElementById('addEventForm'));
+});
 
 function showAddEventForm() {
     // Hide the calendar view and show the add event form
@@ -170,3 +196,46 @@ function addEvent(event) {
     document.getElementById("eventSport").value = "";
     document.getElementById("eventTeams").value = "";
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    const viewCalendarBtn = document.getElementById('viewCalendarBtn');
+    const addEventBtn = document.getElementById('addEventBtn');
+    const calendarView = document.getElementById('content'); // The main content area
+    const addEventForm = document.getElementById('addEventForm');
+
+    // Initially hide the add event form with opacity and visibility
+    addEventForm.style.opacity = '0';
+    addEventForm.style.visibility = 'hidden';
+
+    // Function to switch between views
+    function switchView(showCalendar) {
+        if (showCalendar) {
+            // Show calendar, hide form
+            addEventForm.style.opacity = '0';
+            addEventForm.style.visibility = 'hidden';
+            setTimeout(() => {
+                calendarView.style.opacity = '1';
+                calendarView.style.visibility = 'visible';
+            }, 200);  // Small delay to allow opacity transition
+        } else {
+            // Show form, hide calendar
+            calendarView.style.opacity = '0';
+            calendarView.style.visibility = 'hidden';
+            setTimeout(() => {
+                addEventForm.style.opacity = '1';
+                addEventForm.style.visibility = 'visible';
+            }, 200);  // Small delay to allow opacity transition
+        }
+    }
+
+    // Event listener for calendar button
+    viewCalendarBtn.addEventListener('click', function () {
+        switchView(true);
+    });
+
+    // Event listener for add event button
+    addEventBtn.addEventListener('click', function () {
+        switchView(false);
+    });
+});
+
