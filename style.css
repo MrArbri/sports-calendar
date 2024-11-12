@@ -124,10 +124,6 @@ main {
     color: #555;
 }
 
-.hidden {
-    display: none;
-  }  
-
 #addEventForm {
     width: 100%;
     max-width: 500px;
@@ -176,6 +172,31 @@ main {
     background-color: #388E3C;
 }
 
+/* Styling the filters */
+#filters {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    margin: 10px 0;
+  }
+  
+  #filters select {
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  #filters label {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  /* Hide the filters when the "Add Event" button is clicked */
+  #filters.hidden {
+    display: none;
+  }
+  
 @media (max-width: 768px) {
     .calendar-grid {
         grid-template-columns: repeat(4, 1fr);

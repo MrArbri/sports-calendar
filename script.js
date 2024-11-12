@@ -284,10 +284,8 @@ function showFilteredEvents(filteredEvents) {
     showCalendar(); // No need to pass filters, just render filtered events
 }
 
-
 document.getElementById('sportFilter').addEventListener('change', filterEvents);
 document.getElementById('statusFilter').addEventListener('change', filterEvents);
-
 
 // Function to display the calendar or events based on filtered data
 function showFilteredCalendar(filteredEvents) {
@@ -311,21 +309,31 @@ function resetFiltersAndShowCalendar() {
     document.getElementById('statusFilter').selectedIndex = 0;
 
     // Call filterEvents to apply the default filters
-    filterEvents();
+    filterEvents();  // Make sure this function applies the filters correctly
 }
 
+// Function to hide the filters when Add Event is clicked
+function hideFilters() {
+    document.getElementById('filters').classList.add('hidden');
+}
+
+// Function to show the filters when Calendar is clicked
+function showFilters() {
+    document.getElementById('filters').classList.remove('hidden');
+}
+
+// Event listener for Add Event button
 document.querySelector('#addEventBtn').addEventListener('click', () => {
-  // Hide filters by adding the 'hidden' class
-  document.getElementById('filters').classList.add('hidden');
-
-  // Show the add event form
-  showAddEventForm();
+    // Hide filters and show add event form
+    switchView(document.getElementById('content'), document.getElementById('addEventForm'));
+    hideFilters();  // Hide filters when Add Event is clicked
 });
 
+// Event listener for View Calendar button
 document.querySelector('#viewCalendarBtn').addEventListener('click', () => {
-  // Show filters by removing the 'hidden' class
-  document.getElementById('filters').classList.remove('hidden');
-
-  // Show the calendar view
-  resetFiltersAndShowCalendar();
+    // Show filters and calendar view, reset filters
+    switchView(document.getElementById('addEventForm'), document.getElementById('content'));
+    showFilters();  // Show filters when Calendar is clicked
+    resetFiltersAndShowCalendar(); // Reset filters and display calendar
 });
+
