@@ -1,54 +1,75 @@
-let eventsData = [];
+let eventsData = []; // All events (unfiltered)
+let filteredEvents = []; // Filtered events based on selected filters
 
-// Fetch data from sportData.json file 
+// Fetch data from sportData.json file
 fetch('sportData.json')
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok.');
         }
-        return response.json(); // Parse JSON data 
+        return response.json(); // Parse JSON data
     })
     .then(data => {
-        eventsData = data.data; // Store data globally 
-        showCalendar(); // Initialize the calendar after data is loaded 
+        eventsData = data.data; // Store data globally
+        filteredEvents = [...eventsData]; // Initialize filtered events as the full list
+        showCalendar(); // Initialize the calendar after data is loaded
     })
     .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
     });
 
-// Creating the showCalendar function 
-function showCalendar() {
-    // Hide add event form when showing the calendar
-    document.getElementById("addEventForm").style.display = "none"; 
+// Modified filterEvents function
+function filterEvents() {
+    const sportFilter = document.getElementById('sportFilter').value;
+    const statusFilter = document.getElementById('statusFilter').value;
 
-    // Getting the id of the <main> on index.html
-    const content = document.getElementById("content");
-    // Clearing previous content
-    content.innerHTML = ""; 
+    // Filter events based on selected filters
+    filteredEvents = eventsData; // Reset filtered events to all data
 
-    if (eventsData.length === 0) {
-        content.innerHTML = "<p>No events available</p>";
-        return; // Exit function if no events
+    if (sportFilter) {
+        filteredEvents = filteredEvents.filter(event => event.sport === sportFilter);
     }
+
+    if (statusFilter) {
+        filteredEvents = filteredEvents.filter(event => event.status === statusFilter);
+    }
+
+    // Display filtered events
+    showFilteredEvents(filteredEvents); // Show filtered events in the calendar
+}
+
+// Show filtered events in the calendar
+function showFilteredEvents(filteredEvents) {
+    if (filteredEvents.length === 0) {
+        document.getElementById("content").innerHTML = "<p>No events available for the selected filters.</p>";
+    } else {
+        showCalendar(filteredEvents); // Show the calendar with the filtered events
+    }
+}
+
+// Modified showCalendar function to use filteredEvents
+function showCalendar(filteredEvents = eventsData) {
+    document.getElementById("addEventForm").style.display = "none"; // Hide add event form
+    const content = document.getElementById("content");
+    content.innerHTML = ""; // Clear previous content
 
     const currentDate = new Date();
     const year = currentDate.getFullYear();
-    const month = 0;
+    const month = 0; // January
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-    // Declaring calendarGrid and creating a <div> tag with a class="calendar-grid" inside
+    // Create calendar grid
     const calendarGrid = document.createElement("div");
     calendarGrid.classList.add("calendar-grid");
 
-    // Generate days in the month 
+    // Generate days in the month
     for (let day = 1; day <= daysInMonth; day++) {
-        // for each day in "calendar-grid" a <div> with a class="day" will be created
         const dayDiv = document.createElement("div");
         dayDiv.classList.add("day");
         dayDiv.textContent = day;
 
         // Find events for the current day
-        const dayEvents = eventsData.filter(event => {
+        const dayEvents = filteredEvents.filter(event => {
             const eventDate = new Date(event.dateVenue);
             return (
                 eventDate.getDate() === day &&
@@ -57,21 +78,19 @@ function showCalendar() {
             );
         });
 
-        // If there are events, add a marker and set up the click handler 
         if (dayEvents.length > 0) {
-            // Add a special class if there is an event
-            dayDiv.classList.add("event-day"); 
+            dayDiv.classList.add("event-day");
             dayDiv.addEventListener("click", () => {
-                // Pass events for this day 
-                showEventDetails(dayEvents); 
+                showEventDetails(dayEvents);
             });
         }
-        
+
         calendarGrid.appendChild(dayDiv);
     }
 
     content.appendChild(calendarGrid);
 }
+
 
 // Load calendar view initially 
 document.addEventListener("DOMContentLoaded", () => {
@@ -177,10 +196,10 @@ function addEvent(event) {
 
     // Create a new event object
     const newEvent = {
-        dateVenue: eventDate,          // Use the date input as the event date
-        timeVenueUTC: eventTime,        // Use the time input as the event time
-        sport: eventSport,              // Sport name
-        teams: eventTeams,              // Teams/participants in a simple string format
+        dateVenue: eventDate,      // Use the date input as the event date
+        timeVenueUTC: eventTime,   // Use the time input as the event time
+        sport: eventSport,         // Sport name
+        teams: eventTeams,         // Teams/participants in a simple string format
     };
 
     // Step 2: Add new event to the eventsData array
@@ -200,7 +219,9 @@ function addEvent(event) {
 document.addEventListener('DOMContentLoaded', function () {
     const viewCalendarBtn = document.getElementById('viewCalendarBtn');
     const addEventBtn = document.getElementById('addEventBtn');
-    const calendarView = document.getElementById('content'); // The main content area
+    // The main content area
+    const calendarView = document.getElementById('content'); 
+    // The add event area 
     const addEventForm = document.getElementById('addEventForm');
 
     // Initially hide the add event form with opacity and visibility
@@ -239,3 +260,72 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+function filterEvents() {
+    const sportFilter = document.getElementById('sportFilter').value;
+    const statusFilter = document.getElementById('statusFilter').value;
+
+    filteredEvents = eventsData;
+
+    if (sportFilter) {
+        filteredEvents = filteredEvents.filter(event => event.sport === sportFilter);
+    }
+
+    if (statusFilter) {
+        filteredEvents = filteredEvents.filter(event => event.status === statusFilter);
+    }
+
+    // Display filtered events
+    showCalendar(filteredEvents);
+}
+
+function showFilteredEvents(filteredEvents) {
+    eventsData = filteredEvents; // Temporarily set eventsData to filtered list
+    // Apply filters to the events data
+    showCalendar(); // No need to pass filters, just render filtered events
+}
+
+
+document.getElementById('sportFilter').addEventListener('change', filterEvents);
+document.getElementById('statusFilter').addEventListener('change', filterEvents);
+
+
+// Function to display the calendar or events based on filtered data
+function showFilteredCalendar(filteredEvents) {
+    const content = document.getElementById("content");
+    content.innerHTML = ""; // Clear the content
+
+    if (filteredEvents.length === 0) {
+        content.innerHTML = "<p>No events available for the selected filters.</p>";
+        return;
+    }
+
+    // Proceed to render calendar or event list based on filteredEvents...
+    // This may involve calling showCalendar or any other function you've defined
+    // to render events based on filteredEvents instead of eventsData.
+}
+
+// Function to reset the filters and show the calendar
+function resetFiltersAndShowCalendar() {
+    // Reset the filter values to index 0 (default)
+    document.getElementById('sportFilter').selectedIndex = 0;
+    document.getElementById('statusFilter').selectedIndex = 0;
+
+    // Call filterEvents to apply the default filters
+    filterEvents();
+}
+
+document.querySelector('#addEventBtn').addEventListener('click', () => {
+  // Hide filters by adding the 'hidden' class
+  document.getElementById('filters').classList.add('hidden');
+
+  // Show the add event form
+  showAddEventForm();
+});
+
+document.querySelector('#viewCalendarBtn').addEventListener('click', () => {
+  // Show filters by removing the 'hidden' class
+  document.getElementById('filters').classList.remove('hidden');
+
+  // Show the calendar view
+  resetFiltersAndShowCalendar();
+});

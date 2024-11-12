@@ -27,12 +27,23 @@
       </nav>
     </header>
 
-    <select id="sportFilter" onchange="filterEvents()">
-      <option value="">All Sports</option>
-      <option value="Football">Football</option>
-      <option value="Ice Hockey">Ice Hockey</option>
-      <!-- Add more options as needed -->
-    </select>
+    <!-- Filters section -->
+    <div id="filters">
+      <!-- Filter by sport category -->
+      <select id="sportFilter" onchange="filterEvents()">
+        <option value="">All Sports</option>
+        <option value="Football">Football</option>
+        <option value="Ice Hockey">Ice Hockey</option>
+        <!-- Add more options as needed -->
+      </select>
+
+      <!-- Filter by status -->
+      <select id="statusFilter" onchange="filterEvents()">
+        <option value="">All Statuses</option>
+        <option value="scheduled">Scheduled</option>
+        <option value="played">Played</option>
+      </select>
+    </div>
 
     <!-- Main content area where calendar and event details are injected -->
     <main id="content">
@@ -48,12 +59,14 @@
     <div id="addEventForm" style="display: none">
       <h2>Add New Event</h2>
       <form onsubmit="addEvent(event)">
-        <label>Date:</label><input type="date" id="eventDate" required /><br />
-        <label>Time:</label><input type="time" id="eventTime" required /><br />
-        <label>Sport:</label
-        ><input type="text" id="eventSport" required /><br />
-        <label>Teams:</label
-        ><input type="text" id="eventTeams" required /><br />
+        <label>Date:</label>
+        <input type="date" id="eventDate" value="2024-01-01" required /><br />
+        <label>Time:</label>
+        <input type="time" id="eventTime" value="09:00" required /><br />
+        <label>Sport:</label>
+        <input type="text" id="eventSport" required /><br />
+        <label>Teams:</label>
+        <input type="text" id="eventTeams" required /><br />
         <button type="submit">Add Event</button>
       </form>
     </div>
