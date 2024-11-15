@@ -78,6 +78,7 @@ main {
     padding: 10px;
 }
 
+/* Style for event details button */
 #eventDetail {
     position: fixed;
     top: 10%;
@@ -96,9 +97,29 @@ main {
     overflow-y: auto;
 }
 
-#eventDetail.fade-in {
-    display: block;
-    opacity: 1;
+/* Style for close button */
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #df0909;
+    color: white;
+    border: none;
+    border-radius: 20%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect */
+.close-button:hover {
+    background-color: #ff1a1a;
 }
 
 .event-item {
@@ -124,6 +145,15 @@ main {
     color: #555;
 }
 
+#content, #addEventForm {
+    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+    display: none; 
+}
+
+#content {
+    display: block; 
+}
+
 #addEventForm {
     width: 100%;
     max-width: 500px;
@@ -132,8 +162,9 @@ main {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     margin-top: 2rem;
-    display: none;
-    transition: opacity 0.3s ease, visibility 0s 0.3s;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 
 #addEventForm h2 {
@@ -178,24 +209,25 @@ main {
     display: flex;
     justify-content: space-evenly;
     margin: 10px 0;
-  }
+}
   
-  #filters select {
+#filters select {
     padding: 5px;
     font-size: 16px;
     border-radius: 5px;
     border: 1px solid #ccc;
-  }
+    transition: visibility 0.5s ease;
+}
   
-  #filters label {
+#filters label {
     font-weight: bold;
     margin-right: 10px;
-  }
+}
   
-  /* Hide the filters when the "Add Event" button is clicked */
-  #filters.hidden {
-    display: none;
-  }
+/* Hide the filters when the "Add Event" button is clicked */
+#filters.hidden {
+    visibility: hidden;
+}
   
 @media (max-width: 768px) {
     .calendar-grid {
