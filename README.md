@@ -37,7 +37,11 @@ This project consists of the following files:
 To run the application, follow these steps:
 
 1. Clone or download the repository to your local machine.
-   (https://github.com/MrArbri/sports-calendar.git)
+
+  ```bash
+git clone https://github.com/MrArbri/sports-calendar_FE
+```
+
 2. Open the `index.html` file in your web browser.
 3. The calendar will be displayed with events for the month of January, and you can interact with the application directly in the browser.
 
