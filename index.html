@@ -7,25 +7,26 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <nav>
+      <button
+        id="viewCalendarBtn"
+        onclick="showCalendar()"
+        aria-label="Show Calendar"
+      >
+        Calendar
+      </button>
+      <button
+        id="addEventBtn"
+        onclick="showAddEventForm()"
+        aria-label="Add New Event"
+      >
+        Add Event
+      </button>
+    </nav>
+
     <!-- Header section -->
     <header>
       <h1>Sports Event Calendar</h1>
-      <nav>
-        <button
-          id="viewCalendarBtn"
-          onclick="showCalendar()"
-          aria-label="Show Calendar"
-        >
-          Calendar
-        </button>
-        <button
-          id="addEventBtn"
-          onclick="showAddEventForm()"
-          aria-label="Add New Event"
-        >
-          Add Event
-        </button>
-      </nav>
     </header>
 
     <!-- Filters section -->
@@ -70,6 +71,15 @@
         <button type="submit">Add Event</button>
       </form>
     </div>
+
+    <!-- footer -->
+    <footer>
+      <p>
+        &copy;
+        <?= date('Y'); ?>
+        Arbër Islamaj. All rights reserved.
+      </p>
+    </footer>
 
     <script src="script.js"></script>
   </body>

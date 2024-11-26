@@ -18,29 +18,36 @@ header {
     width: 100%;
     background: #4CAF50;
     color: white;
-    padding: 1rem;
     text-align: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 nav {
-    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    background-color: green;
+    width: 100%;
 }
 
 nav button {
-    margin: 0.5rem;
-    padding: 0.75rem 1.25rem;
-    font-size: 1rem;
+    padding: 10px;
+    margin: 10px;
+    font-size: 16px;
     background-color: rgb(29, 33, 25);
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 nav button:hover {
     background-color: rgb(59, 85, 61);
+}
+
+h1 {
+    padding: 3rem;
 }
 
 main {
@@ -227,6 +234,17 @@ main {
 /* Hide the filters when the "Add Event" button is clicked */
 #filters.hidden {
     visibility: hidden;
+}
+
+footer {
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    background-color: #212121;
+    color: #fff;
+    border-top: 1px solid #ddd;
+    font-size: 14px;
+    margin-top: 20px;
 }
   
 @media (max-width: 768px) {
