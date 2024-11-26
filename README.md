@@ -13,7 +13,7 @@ Users can:
 This application is built with plain HTML, CSS, and JavaScript and does not require a server-side backend. The data is stored in a JSON file, and interactions are handled dynamically on the front-end.
 
 You can try the live version of the application here:
-[**Sports Event Calendar - Live Demo**](https://mrarbri.github.io/sports-calendar/)
+[**Sports Event Calendar - Live Demo**](https://mrarbri.github.io/sports-calendar_FE/)
 
 ## Features
 
@@ -38,7 +38,7 @@ To run the application, follow these steps:
 
 1. Clone or download the repository to your local machine.
 
-  ```bash
+```bash
 git clone https://github.com/MrArbri/sports-calendar_FE
 ```
 
